@@ -4,3 +4,6 @@
 [submodule "base/ipp-spring-cloud-dependence"]
 	path = base/ipp-spring-cloud-dependence
 	url = git@github.com:manbucy/ipp-spring-cloud-dependence.git
+[submodule "server/ipp-product-server"]
+	path = server/ipp-product-server
+	url = git@github.com:manbucy/ipp-product-server.git

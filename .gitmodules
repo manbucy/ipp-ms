@@ -1,0 +1,6 @@
+[submodule "server/ipp-auth-server"]
+	path = server/ipp-auth-server
+	url = git@github.com:manbucy/ipp-auth-server.git
+[submodule "base/ipp-spring-cloud-dependence"]
+	path = base/ipp-spring-cloud-dependence
+	url = git@github.com:manbucy/ipp-spring-cloud-dependence.git

@@ -7,3 +7,9 @@
 [submodule "server/ipp-product-server"]
 	path = server/ipp-product-server
 	url = git@github.com:manbucy/ipp-product-server.git
+[submodule "base/ipp-spring-boot-dependence"]
+	path = base/ipp-spring-boot-dependence
+	url = git@github.com:manbucy/ipp-spring-boot-dependence.git
+[submodule "base/ipp-spring-boot-core"]
+	path = base/ipp-spring-boot-core
+	url = git@github.com:manbucy/ipp-spring-boot-core.git

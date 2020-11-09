@@ -13,3 +13,6 @@
 [submodule "base/ipp-spring-boot-core"]
 	path = base/ipp-spring-boot-core
 	url = git@github.com:manbucy/ipp-spring-boot-core.git
+[submodule "server/ipp-gateway-server"]
+	path = server/ipp-gateway-server
+	url = git@github.com:manbucy/ipp-gateway-server.git

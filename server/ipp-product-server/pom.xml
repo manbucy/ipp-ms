@@ -16,15 +16,18 @@
 
     <name>ipp-product-server</name>
 
-    <properties>
-        <ipp.frame.version>2020.0.0-SNAPSHOT</ipp.frame.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>
             <artifactId>ipp-spring-boot-core</artifactId>
-            <version>${ipp-frame.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.manbucy.ipp.boot</groupId>
+            <artifactId>ipp-spring-boot-starter-database</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.manbucy.ipp.boot</groupId>
+            <artifactId>ipp-spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--cloud基础-->
@@ -50,7 +53,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-
 
         <!--security-->
         <dependency>

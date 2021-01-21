@@ -20,9 +20,15 @@
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>
             <artifactId>ipp-spring-boot-core</artifactId>
-            <version>${ipp-frame.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.manbucy.ipp.boot</groupId>
+            <artifactId>ipp-spring-boot-starter-database</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.manbucy.ipp.boot</groupId>
+            <artifactId>ipp-spring-boot-starter-web</artifactId>
+        </dependency>
 
         <!--cloud基础-->
         <dependency>
@@ -54,6 +60,7 @@
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
 
+        <!--测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

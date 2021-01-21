@@ -3,7 +3,7 @@ package net.manbucy.ipp.cover.auth.pojo.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import net.manbucy.ipp.boot.core.entity.CommonEntity;
+import net.manbucy.ipp.boot.data.entity.CommonEntity;
 
 /**
  * @author ManBu

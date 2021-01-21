@@ -16,6 +16,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <ipp-frame.version>2020.0.0-SNAPSHOT</ipp-frame.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -23,7 +24,7 @@
         <spring-boot.version>2.4.1</spring-boot.version>
         <druid-starter.version>1.2.4</druid-starter.version>
         <mybatis-plush.version>3.4.1</mybatis-plush.version>
-        <ipp-frame.version>2020.0.0-SNAPSHOT</ipp-frame.version>
+        <hutool.version>5.5.7</hutool.version>
     </properties>
 
     <dependencyManagement>
@@ -51,6 +52,37 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plush.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-core</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-data</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-starter-database</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-starter-web</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <repositories>

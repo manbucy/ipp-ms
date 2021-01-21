@@ -1,4 +1,4 @@
-package net.manbucy.ipp.boot.core.entity;
+package net.manbucy.ipp.boot.data.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;

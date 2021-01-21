@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SecurityUtil {
     public static UserDetail getUser() {
-        return (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userDetail = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetail instanceof UserDetail ? ((UserDetail) userDetail) : null;
     }
 }

@@ -41,18 +41,14 @@ public class NacosMetadataLoadBalancerClientFilter implements GlobalFilter, Orde
 
     private final LoadBalancerClientFactory clientFactory;
 
-    private final GatewayLoadBalancerProperties properties;
-
     private final LoadBalancerProperties loadBalancerProperties;
 
     @Value("${spring.cloud.gateway.nacos-metadata-balancer.key}")
     private String metadataKey;
 
     public NacosMetadataLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
-                                                 GatewayLoadBalancerProperties properties,
                                                  LoadBalancerProperties loadBalancerProperties) {
         this.clientFactory = clientFactory;
-        this.properties = properties;
         this.loadBalancerProperties = loadBalancerProperties;
     }
 
@@ -81,28 +77,27 @@ public class NacosMetadataLoadBalancerClientFilter implements GlobalFilter, Orde
                 .next()
                 .map(serviceInstances -> getInstanceResponse(serviceInstances, lbRequest))
                 .doOnNext(response -> {
-                    if (!response.hasServer()) {
-                        throw NotFoundException.create(properties.isUse404(), "Unable to find instance for " + url.getHost());
+                    if (response.hasServer()) {
+                        // 当前response有效则进行替换url地址，否则不处理
+                        ServiceInstance retrievedInstance = response.getServer();
+
+                        URI uri = exchange.getRequest().getURI();
+
+                        // if the `lb:<scheme>` mechanism was used, use `<scheme>` as the default,
+                        // if the loadbalancer doesn't provide one.
+                        String overrideScheme = retrievedInstance.isSecure() ? "https" : "http";
+                        if (schemePrefix != null) {
+                            overrideScheme = url.getScheme();
+                        }
+
+                        DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(retrievedInstance,
+                                overrideScheme);
+
+                        URI requestUrl = LoadBalancerUriTools.reconstructURI(serviceInstance, uri);
+
+                        exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, requestUrl);
+                        exchange.getAttributes().put(GATEWAY_LOADBALANCER_RESPONSE_ATTR, response);
                     }
-
-                    ServiceInstance retrievedInstance = response.getServer();
-
-                    URI uri = exchange.getRequest().getURI();
-
-                    // if the `lb:<scheme>` mechanism was used, use `<scheme>` as the default,
-                    // if the loadbalancer doesn't provide one.
-                    String overrideScheme = retrievedInstance.isSecure() ? "https" : "http";
-                    if (schemePrefix != null) {
-                        overrideScheme = url.getScheme();
-                    }
-
-                    DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(retrievedInstance,
-                            overrideScheme);
-
-                    URI requestUrl = LoadBalancerUriTools.reconstructURI(serviceInstance, uri);
-
-                    exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, requestUrl);
-                    exchange.getAttributes().put(GATEWAY_LOADBALANCER_RESPONSE_ATTR, response);
                 }).then(chain.filter(exchange));
     }
 

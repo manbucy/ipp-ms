@@ -2,7 +2,7 @@
 set base_path=%cd%
 echo [current base path is]%base_path%
 
-for /d %%i in (*) do (
+for /d %%i in (ipp*) do (
     cd %%i
     mvn clean
     mvn install

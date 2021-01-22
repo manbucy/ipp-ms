@@ -32,7 +32,7 @@ public class TestController {
 
     @GetMapping("/user")
     public R<UserDetail> getUser() {
-        return R.ok(SecurityUtil.getUser());
+        return R.ok(SecurityUtil.getUser().orElse(null));
     }
 
 }

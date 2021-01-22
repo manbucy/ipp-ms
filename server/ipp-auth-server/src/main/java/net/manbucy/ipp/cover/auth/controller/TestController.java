@@ -5,7 +5,6 @@ import net.manbucy.ipp.boot.core.api.R;
 import net.manbucy.ipp.boot.core.security.UserDetail;
 import net.manbucy.ipp.boot.core.utils.SecurityUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,7 +29,7 @@ public class TestController {
 
     @GetMapping("/user")
     public R<UserDetail> getUser() {
-        return R.ok(SecurityUtil.getUser());
+        return R.ok(SecurityUtil.getUser().orElse(null));
     }
 
 }

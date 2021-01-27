@@ -2,8 +2,8 @@ package net.manbucy.ipp.cover.product.controller;
 
 import lombok.RequiredArgsConstructor;
 import net.manbucy.ipp.boot.core.api.R;
-import net.manbucy.ipp.boot.core.security.UserDetail;
-import net.manbucy.ipp.boot.core.utils.SecurityUtil;
+import net.manbucy.ipp.cloud.security.core.UserDetail;
+import net.manbucy.ipp.cloud.security.utils.SecurityUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

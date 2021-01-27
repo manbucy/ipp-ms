@@ -1,15 +1,14 @@
 package net.manbucy.ipp.cover.gateway.filter;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.gateway.config.GatewayLoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.DelegatingServiceInstance;
-import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
@@ -35,22 +34,18 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*
 @Component
 @ConditionalOnProperty(name = "spring.cloud.gateway.nacos-metadata-balancer.enabled")
 @RefreshScope
+@RequiredArgsConstructor
 public class NacosMetadataLoadBalancerClientFilter implements GlobalFilter, Ordered {
     public static final int NACOS_METADATA_LOAD_BALANCER_ORDER = 10149;
     public static final String LOAD_BALANCER_PREFIX = "lb";
 
-    private final LoadBalancerClientFactory clientFactory;
+    final LoadBalancerClientFactory clientFactory;
 
-    private final LoadBalancerProperties loadBalancerProperties;
+    final LoadBalancerProperties loadBalancerProperties;
 
     @Value("${spring.cloud.gateway.nacos-metadata-balancer.key}")
     private String metadataKey;
 
-    public NacosMetadataLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
-                                                 LoadBalancerProperties loadBalancerProperties) {
-        this.clientFactory = clientFactory;
-        this.loadBalancerProperties = loadBalancerProperties;
-    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

@@ -48,6 +48,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-security</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

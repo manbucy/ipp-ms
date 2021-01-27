@@ -1,4 +1,4 @@
-package net.manbucy.ipp.boot.core.security;
+package net.manbucy.ipp.cloud.security.core;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

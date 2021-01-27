@@ -1,4 +1,4 @@
-package net.manbucy.ipp.boot.core.constants;
+package net.manbucy.ipp.cloud.security.constants;
 
 /**
  * @author ManBu

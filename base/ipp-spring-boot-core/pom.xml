@@ -14,12 +14,6 @@
     <version>2020.0.0-SNAPSHOT</version>
 
     <dependencies>
-        <!-- security -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
-
         <!--基础-->
         <dependency>
             <groupId>org.projectlombok</groupId>

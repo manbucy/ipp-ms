@@ -56,8 +56,8 @@
 
         <!--security-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>net.manbucy.ipp.cloud</groupId>
+            <artifactId>ipp-spring-cloud-security</artifactId>
         </dependency>
 
         <!--测试-->

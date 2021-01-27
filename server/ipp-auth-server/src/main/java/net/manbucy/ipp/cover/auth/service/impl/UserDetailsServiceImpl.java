@@ -2,8 +2,8 @@ package net.manbucy.ipp.cover.auth.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.manbucy.ipp.boot.core.constants.SecurityConstants;
-import net.manbucy.ipp.boot.core.security.UserDetail;
+import net.manbucy.ipp.cloud.security.constants.SecurityConstants;
+import net.manbucy.ipp.cloud.security.core.UserDetail;
 import net.manbucy.ipp.cover.auth.mapper.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.UserDTO;
 import net.manbucy.ipp.cover.auth.pojo.dto.RoleDTO;

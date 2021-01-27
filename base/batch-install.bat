@@ -6,5 +6,6 @@ for /d %%i in (ipp*) do (
     cd %%i
     mvn clean
     mvn install
+    mvn source:jar install
     cd %base_path%
 )

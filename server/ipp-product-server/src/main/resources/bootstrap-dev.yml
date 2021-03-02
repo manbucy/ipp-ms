@@ -12,3 +12,5 @@ spring:
         namespace: ${spring.cloud.nacos.discovery.namespace}
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

@@ -15,19 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 public class HelloController {
 
-    @Value("${product.name}")
-    private String productName;
-
-    @Value("${product.code}")
-    private String productCode;
-
     @GetMapping("/echo/{string}")
     public String echo(@PathVariable String string) {
         return String.format("hello [%S] -- from product", string);
-    }
-
-    @GetMapping("/product")
-    public String product() {
-        return String.format("产品代码[%s], 产品名称[%s]", productCode, productName);
     }
 }

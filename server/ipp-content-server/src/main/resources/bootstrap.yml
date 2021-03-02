@@ -1,0 +1,12 @@
+server:
+  port: 48040
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: @profiles.active@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

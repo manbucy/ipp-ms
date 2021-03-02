@@ -1,0 +1,35 @@
+spring:
+    redis:
+      database: 0
+      host: 192.168.169.2
+      port: 36379
+    cloud:
+        gateway:
+            default-filters:
+              - StripPrefix=1 # 也可使用 RewritePath
+              - AddRequestHeader=X-test, hello
+            nacos-metadata-balancer:
+              enabled: true
+              key: VERSION
+            routes:
+              - id: ipp-auth-server
+                uri: lb://ipp-auth-server
+                predicates:
+                  - Path=/auth/**
+                filters:
+                  - AddRequestParameter=server, auth
+              - id: ipp-product-server
+                uri: lb://ipp-product-server
+                predicates:
+                  - Path=/product/**
+                filters:
+                  - AddRequestParameter=server, product
+              - id: ipp-content-server
+                uri: lb://ipp-content-server
+                predicates:
+                  - Path=/content/**
+                filters:
+                  - AddRequestParameter=server, content     
+logging:
+    level:
+      org.springframework.cloud.gateway: debug

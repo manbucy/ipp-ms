@@ -1,0 +1,3 @@
+loggin:
+    level:
+        net.manbucy: debug

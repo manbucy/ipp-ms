@@ -25,6 +25,7 @@
         <druid-starter.version>1.2.4</druid-starter.version>
         <mybatis-plush.version>3.4.1</mybatis-plush.version>
         <hutool.version>5.5.7</hutool.version>
+        <springfox.version>3.0.0</springfox.version>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +58,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
             </dependency>
 
             <dependency>

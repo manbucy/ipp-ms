@@ -1,3 +1,14 @@
+springfox:
+    documentation:
+        base-url: /documentation
+        swagger:
+            v2:
+                path: ${springfox.documentation.base-url}/v2/api-docs
+        open-api:
+            v3:
+                path: ${springfox.documentation.base-url}/v3/api-docs
+        swagger-ui:
+            base-url: ${springfox.documentation.base-url}
 loggin:
     level:
         net.manbucy: debug

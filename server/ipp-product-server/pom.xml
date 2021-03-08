@@ -66,6 +66,11 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <!--文档-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
 
         <!--测试-->
         <dependency>

@@ -4,7 +4,7 @@
 
 ## 模块概览
 | 名称 | 目录 | 介绍 | 端口 | 访问地址 |
-| :- | :-: | :- | :-: | :- |
+| :--- | :---: | :--- | :---: | :--- |
 | ipp-spring-boot-dependence | base | springboot相关基础依赖 | - | - |
 | ipp-spring-cloud-dependence | base | springcloud相关基础依赖 | - | - |
 | ipp-spring-boot-core | base | springboot项目基础, 为其它服务提供公共基础代码 | - | - |
@@ -16,10 +16,10 @@
 
 
 ### Swagger文档地址
-| 模块名 | 文档地址 |
-| :-: | :- |
-| ipp-gateway-server | http://localhost:48000/documentation/swagger-ui/ |
-| ipp-auth-server | http://localhost:48000/auth/documentation/swagger-ui/ |
-| ipp-admin-server | http://localhost:48000/admin/documentation/swagger-ui/ |
-| ipp-product-server | http://localhost:48000/product/documentation/swagger-ui/ |
-| ipp-content-server | http://localhost:48000/content/documentation/swagger-ui/ |
+| 模块名 | 文档地址 |   
+| :---: | :--- |  
+| ipp-gateway-server | http://localhost:48000/documentation/swagger-ui/ |  
+| ipp-auth-server | http://localhost:48000/auth/documentation/swagger-ui/ |  
+| ipp-admin-server | http://localhost:48000/admin/documentation/swagger-ui/ |  
+| ipp-product-server | http://localhost:48000/product/documentation/swagger-ui/ |  
+| ipp-content-server | http://localhost:48000/content/documentation/swagger-ui/ |  

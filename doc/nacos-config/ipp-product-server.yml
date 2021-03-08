@@ -1,4 +1,10 @@
 spring:
+    security:
+        oauth2:
+            resourceserver:
+                ignore-url:
+                  - /hello/**
+                  - /documentation/**
     redis:
         database: 0
         host: 192.168.169.2

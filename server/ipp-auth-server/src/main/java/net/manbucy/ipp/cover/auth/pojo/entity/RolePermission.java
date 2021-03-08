@@ -3,7 +3,7 @@ package net.manbucy.ipp.cover.auth.pojo.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import net.manbucy.ipp.boot.data.entity.CommonEntity;
+import net.manbucy.ipp.boot.data.mybatisplus.entity.BaseEntity;
 
 /**
  * @author ManBu
@@ -15,7 +15,7 @@ import net.manbucy.ipp.boot.data.entity.CommonEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("s_role_permission")
-public class RolePermission extends CommonEntity {
+public class RolePermission extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @TableField(value = "role_id")

@@ -1,4 +1,4 @@
-package net.manbucy.ipp.boot.data.entity;
+package net.manbucy.ipp.boot.data.mybatisplus.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CommonEntity extends BaseEntity {
+public class BaseEntity extends AuditEntity {
     private static final long serialVersionUID = 1L;
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

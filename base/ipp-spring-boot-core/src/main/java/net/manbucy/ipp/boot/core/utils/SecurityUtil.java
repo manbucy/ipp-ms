@@ -1,6 +1,6 @@
-package net.manbucy.ipp.cloud.security.utils;
+package net.manbucy.ipp.boot.core.utils;
 
-import net.manbucy.ipp.cloud.security.core.UserDetail;
+import net.manbucy.ipp.boot.core.security.UserDetail;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;

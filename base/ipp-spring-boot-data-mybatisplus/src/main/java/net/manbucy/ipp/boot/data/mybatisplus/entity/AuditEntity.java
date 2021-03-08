@@ -1,5 +1,6 @@
-package net.manbucy.ipp.boot.data.entity;
+package net.manbucy.ipp.boot.data.mybatisplus.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
@@ -12,18 +13,19 @@ import java.time.LocalDateTime;
  * @author ManBu
  */
 @Data
-public class BaseEntity implements Serializable {
+public class AuditEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-    @TableField(value = "create_user")
+
+    @TableField(value = "create_user", fill = FieldFill.INSERT)
     private String createUser;
     
-    @TableField(value = "create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @TableField(value = "update_user")
+    @TableField(value = "update_user", fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
 
-    @TableField(value = "update_time")
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @Version

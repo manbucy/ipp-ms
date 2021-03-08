@@ -1,7 +1,7 @@
 package net.manbucy.ipp.cover.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import net.manbucy.ipp.cloud.security.core.UserDetail;
+import net.manbucy.ipp.boot.core.security.UserDetail;
 import net.manbucy.ipp.cloud.security.provider.enhance.AbstractEnhanceAuthenticateHandler;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -74,13 +74,7 @@
 
             <dependency>
                 <groupId>net.manbucy.ipp.boot</groupId>
-                <artifactId>ipp-spring-boot-data</artifactId>
-                <version>${ipp-frame.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>net.manbucy.ipp.boot</groupId>
-                <artifactId>ipp-spring-boot-starter-database</artifactId>
+                <artifactId>ipp-spring-boot-data-mybatisplus</artifactId>
                 <version>${ipp-frame.version}</version>
             </dependency>
 
@@ -130,6 +124,7 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
+                    <include>**/META-INF/**</include>
                     <include>**/templates/**</include>
                     <include>**/application*.yml</include>
                     <include>**/application*.yaml</include>

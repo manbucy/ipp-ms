@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <artifactId>ipp-spring-boot-data</artifactId>
+    <artifactId>ipp-spring-boot-data-mybatisplus</artifactId>
     <version>2020.0.0-SNAPSHOT</version>
 
     <dependencies>

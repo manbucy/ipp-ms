@@ -2,8 +2,9 @@ package net.manbucy.ipp.cover.auth.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.manbucy.ipp.boot.core.security.SystemUserId;
+import net.manbucy.ipp.boot.core.security.UserDetail;
 import net.manbucy.ipp.cloud.security.constants.SecurityConstants;
-import net.manbucy.ipp.cloud.security.core.UserDetail;
 import net.manbucy.ipp.cover.auth.mapper.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.UserDTO;
 import net.manbucy.ipp.cover.auth.pojo.dto.RoleDTO;
@@ -44,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(authorities.toArray(new String[0]));
 
-        UserDetail userDetail = new UserDetail(user.getUserId(), user.getUsername(), user.getPassword(),user.getName(),
+        UserDetail userDetail = new UserDetail(new SystemUserId(user.getUserId()), user.getUsername(), user.getPassword(),user.getName(),
                 !user.getLocked(), grantedAuthorities);
         log.debug("UserDetailsServiceImpl.loadUserByUsername userDetail: {}", userDetail);
         return userDetail;

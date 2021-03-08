@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>
-            <artifactId>ipp-spring-boot-starter-database</artifactId>
+            <artifactId>ipp-spring-boot-data-mybatisplus</artifactId>
         </dependency>
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>

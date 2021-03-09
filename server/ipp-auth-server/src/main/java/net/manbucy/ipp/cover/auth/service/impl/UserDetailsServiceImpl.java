@@ -45,7 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(authorities.toArray(new String[0]));
 
-        UserDetail userDetail = new UserDetail(new SystemUserId(user.getUserId()), user.getUsername(), user.getPassword(),user.getName(),
+        UserDetail userDetail = new UserDetail(new SystemUserId(user.getUserId()), user.getUsername(), user.getPassword(),
                 !user.getLocked(), grantedAuthorities);
         log.debug("UserDetailsServiceImpl.loadUserByUsername userDetail: {}", userDetail);
         return userDetail;

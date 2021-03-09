@@ -12,21 +12,16 @@ import java.util.Collection;
 public class UserDetail extends User {
     private static final long serialVersionUID = 1L;
     private AbstractUserId userId;
-    private String name;
 
-    public UserDetail(AbstractUserId userId, String username, String password, String name, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetail(AbstractUserId userId, String username, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, enabled, enabled, enabled, authorities);
         this.userId = userId;
-        this.name = name;
     }
 
     public AbstractUserId getUserId() {
         return userId;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public Long getSystemUserId() {
         if (userId instanceof SystemUserId) {

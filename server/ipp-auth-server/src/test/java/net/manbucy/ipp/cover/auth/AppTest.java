@@ -1,6 +1,7 @@
 package net.manbucy.ipp.cover.auth;
 
 import lombok.extern.slf4j.Slf4j;
+import net.manbucy.ipp.cover.auth.config.properties.VerifyCodeLimitProperties;
 import net.manbucy.ipp.cover.auth.mapper.PermissionMapper;
 import net.manbucy.ipp.cover.auth.mapper.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.UserDTO;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,9 @@ import javax.annotation.Resource;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class AppTest {
+
+    @Autowired
+    protected ApplicationContext ctx;
 
     @Resource
     private UserMapper userMapper;
@@ -78,4 +83,10 @@ public class AppTest {
     }
 
 
+    @Test
+    public void test_get_verify_code_limit_properties_info() {
+        VerifyCodeLimitProperties verifyCodeLimitProperties = ctx.getBean(VerifyCodeLimitProperties.class);
+
+        log.info("verifyCodeLimitProperties: {}", verifyCodeLimitProperties);
+    }
 }

@@ -1,6 +1,7 @@
 package net.manbucy.ipp.cover.auth.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import net.manbucy.ipp.boot.core.security.SystemUserId;
 import net.manbucy.ipp.boot.core.security.UserDetail;
 import net.manbucy.ipp.cloud.security.provider.enhance.AbstractEnhanceAuthenticateHandler;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -32,7 +33,7 @@ public class SmsEnhanceAuthenticateHandler extends AbstractEnhanceAuthenticateHa
 
         log.info("SmsEnhanceAuthenticateHandler.retrieveUser phone: {}, code: {}", phone, code);
 
-        UserDetails userDetails = new UserDetail(1L, phone, code, phone, true, AuthorityUtils.createAuthorityList("ROLE_visitor"));
+        UserDetails userDetails = new UserDetail(new SystemUserId(1L), phone, code, true, AuthorityUtils.createAuthorityList("ROLE_visitor"));
 
         return userDetails;
     }

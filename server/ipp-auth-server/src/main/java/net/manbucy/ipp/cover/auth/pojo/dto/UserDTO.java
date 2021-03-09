@@ -21,11 +21,9 @@ public class UserDTO {
 
     private String password;
 
-    private String name;
-
     private String phone;
 
-    private String avatar;
+    private String email;
 
     private Boolean locked;
 

@@ -25,6 +25,7 @@
         <druid-starter.version>1.2.4</druid-starter.version>
         <mybatis-plush.version>3.4.1</mybatis-plush.version>
         <hutool.version>5.5.7</hutool.version>
+        <java.mail.version>1.4.7</java.mail.version>
         <springfox.version>3.0.0</springfox.version>
     </properties>
 
@@ -58,6 +59,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${java.mail.version}</version>
             </dependency>
 
             <dependency>

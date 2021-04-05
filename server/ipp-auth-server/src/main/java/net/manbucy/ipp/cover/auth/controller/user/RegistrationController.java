@@ -1,12 +1,13 @@
 package net.manbucy.ipp.cover.auth.controller.user;
 
 import lombok.RequiredArgsConstructor;
+import net.manbucy.ipp.boot.core.api.BaseApiCode;
 import net.manbucy.ipp.boot.core.api.R;
-import net.manbucy.ipp.cover.auth.pojo.vo.RegInfoCheckResult;
+import net.manbucy.ipp.cover.auth.controller.user.ao.RegInfo;
+import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationError;
+import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
 import net.manbucy.ipp.cover.auth.service.UserService;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotEmpty;
 
 /**
  * @author ManBu
@@ -17,31 +18,68 @@ import javax.validation.constraints.NotEmpty;
 public class RegistrationController {
     final UserService userService;
 
+
+
     @GetMapping("/check/username")
-    public R<RegInfoCheckResult> checkUsername(@NotEmpty @RequestParam("username") String username) {
-        return R.ok(userService.checkUsername(username));
+    public R<String> checkUsername(@RequestBody RegInfo regInfo) {
+        RegistrationResult usernameCheckResult = userService.checkUsername(regInfo.getUsername());
+        return parseCommonRegResult(usernameCheckResult);
     }
 
     @GetMapping("/check/phone")
-    public R<RegInfoCheckResult> checkPhone(@NotEmpty @RequestParam("phone") String phone) {
-        return R.ok(userService.checkUserPhone(phone));
+    public R<String> checkPhone(@RequestBody RegInfo regInfo) {
+        RegistrationResult phoneCheckResult = userService.checkUserPhone(regInfo.getPhone());
+        return parseCommonRegResult(phoneCheckResult);
     }
 
     @GetMapping("/check/email")
-    public R<RegInfoCheckResult> checkEmail(@NotEmpty @RequestParam("email") String email) {
-        return R.ok(userService.checkUserEmail(email));
+    public R<String> checkEmail(@RequestBody RegInfo regInfo) {
+        RegistrationResult emailCheckResult = userService.checkUserEmail(regInfo.getEmail());
+        return parseCommonRegResult(emailCheckResult);
     }
 
-    @GetMapping("/code/phone")
-    public R<String> sendRegVerifyCodeToPhone(@NotEmpty @RequestParam("phone") String phone) {
+    @PostMapping("/code/phone")
+    public R<String> sendRegVerifyCodeToPhone(@RequestBody RegInfo regInfo) {
+        RegistrationResult codeSendResult = userService.sendRegVerifyCodeToPhone(regInfo.getPhone());
+        return parseCommonRegResult(codeSendResult);
+    }
+
+    @PostMapping("/code/email")
+    public R<String> sendRegVerifyCodeToEmail(@RequestBody RegInfo regInfo) {
+        RegistrationResult codeSendResult = userService.sendRegVerifyCodeToEmail(regInfo.getEmail());
+        if (!codeSendResult.isSuccess()) {
+            if (codeSendResult.getOneError().isPresent()) {
+                RegistrationError error = codeSendResult.getOneError().get();
+                String data = error.getType() == RegistrationError.TYPE_VERIFY_CODE && error.isOperateError() ?
+                        String.valueOf(error.getOperateLockTime()) : null;
+                return R.failed(error.errorCode.code, error.getMsg(), data);
+            }
+            return R.failed(BaseApiCode.FAIL.code, "未知错误", null);
+        }
 
         return R.ok();
     }
 
+    @PostMapping("/phone")
+    public R<String> registerByPhone(@RequestBody RegInfo regInfo) {
+        RegistrationResult result = userService.registrationByPhone(regInfo);
+        return parseCommonRegResult(result);
+    }
 
-    @GetMapping("/code/email")
-    public R<String> sendRegVerifyCodeToEmail(@NotEmpty @RequestParam("email") String email) {
+    @PostMapping("/email")
+    public R<String> registerByEmail(@RequestBody RegInfo regInfo) {
+        RegistrationResult result = userService.registrationByEmail(regInfo);
+        return parseCommonRegResult(result);
+    }
 
+    private R<String> parseCommonRegResult(RegistrationResult result) {
+        if (!result.isSuccess()) {
+            if (result.getOneError().isPresent()) {
+                RegistrationError error = result.getOneError().get();
+                return R.failed(error.errorCode.code, error.getMsg(), null);
+            }
+            return R.failed(BaseApiCode.FAIL.code, "未知错误", null);
+        }
         return R.ok();
     }
 }

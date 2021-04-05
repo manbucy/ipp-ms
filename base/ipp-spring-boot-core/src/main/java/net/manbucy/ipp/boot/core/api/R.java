@@ -16,46 +16,45 @@ import java.io.Serializable;
 @Builder
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
-    private int code;
+    private String code;
     private String msg;
     private T data;
 
     public static <T> R<T> ok() {
-        return result(null, ApiCode.SUCCESS, null);
+        return result(BaseApiCode.SUCCESS.code, BaseApiCode.SUCCESS.msg, null);
     }
 
     public static <T> R<T> ok(T data) {
-        return result(data, ApiCode.SUCCESS, null);
+        return result(BaseApiCode.SUCCESS.code, BaseApiCode.SUCCESS.msg, data);
     }
 
-    public static <T> R<T> ok(T data, String message) {
-        return result(data, ApiCode.SUCCESS, message);
+    public static <T> R<T> ok(String message, T data) {
+        return result(BaseApiCode.SUCCESS.code, message, data);
     }
 
-    public static <T> R<T> failed() {
-        return result(null, ApiCode.FAILED, null);
+    public static <T> R<T> failed(String code) {
+        return result(null, code, null);
     }
 
-    public static <T> R<T> failed(T data) {
-        return result(data, ApiCode.FAILED, null);
+    public static <T> R<T> failed(String code, T data) {
+        return result(code, null, data);
     }
 
-    public static <T> R<T> failed(String message) {
-        return result(null, ApiCode.FAILED, message);
+    public static <T> R<T> failed(String code, String message) {
+        return result(code, message, null);
     }
 
-    public static <T> R<T> failed(T data, String message) {
-        return result(data, ApiCode.FAILED, message);
+    public static <T> R<T> failed(String code, String message, T data) {
+        return result(code, message, data);
     }
 
 
-    private static <T> R<T> result(T data, int code, String message) {
+    private static <T> R<T> result(String code, String message, T data) {
         R<T> r = new R<>();
-        r.setData(data);
         r.setCode(code);
         r.setMsg(message);
+        r.setData(data);
         return r;
     }
-
 
 }

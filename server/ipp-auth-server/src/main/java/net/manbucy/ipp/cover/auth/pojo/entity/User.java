@@ -23,14 +23,11 @@ public class User extends BaseEntity {
     @TableField(value = "password")
     private String password;
 
-    @TableField(value = "name")
-    private String name;
-
     @TableField(value = "phone")
     private String phone;
 
-    @TableField(value = "avatar")
-    private String avatar;
+    @TableField(value = "email")
+    private String email;
 
     @TableField(value = "is_locked")
     private Boolean locked;

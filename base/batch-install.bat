@@ -7,12 +7,10 @@ if "%1" == "" (
         cd %%i
         mvn clean
         mvn install
-        mvn source:jar install
         cd %base_path%
     )
 ) else (
     cd %1
     mvn clean
     mvn install
-    mvn source:jar install
 )

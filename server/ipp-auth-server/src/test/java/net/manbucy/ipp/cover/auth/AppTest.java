@@ -1,5 +1,9 @@
 package net.manbucy.ipp.cover.auth;
 
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.symmetric.AES;
+import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import net.manbucy.ipp.cover.auth.config.properties.VerifyCodeLimitProperties;
 import net.manbucy.ipp.cover.auth.mapper.PermissionMapper;
@@ -40,8 +44,27 @@ public class AppTest {
 
     @Test
     public void getEncryptPwd() {
-        String encryptPwd = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123456");
-        log.info("encrypt: {}", encryptPwd);
+//        String encryptPwd = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123456");
+//        log.info("encrypt: {}", encryptPwd);
+
+        String content = "{\"username\":\"admin\",\"password\":\"admin.123456\",\"email\":\"1412039603@qq.com\",\"verifyCode\":\"198251\"}";
+
+        byte[] key = SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue(), "ipp#aes".getBytes()).getEncoded();
+        AES aes = SecureUtil.aes(key);
+
+        // 加密
+        byte[] encrypt = aes.encrypt(content);
+
+        // 解密
+        byte[] decrypt = aes.decrypt(encrypt);
+
+        // 加密为16进制表示
+        String encryptHex = aes.encryptHex(content);
+
+        // 解密为字符串
+        String decryptStr = aes.decryptStr(encryptHex, CharsetUtil.CHARSET_UTF_8);
+
+        System.out.println(decryptStr);
     }
 
     @Test

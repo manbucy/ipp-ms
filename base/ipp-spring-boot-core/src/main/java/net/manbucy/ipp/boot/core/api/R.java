@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * 统一数据响应体
+ *
  * @author ManBu
  */
 @Data
@@ -48,7 +50,6 @@ public class R<T> implements Serializable {
         return result(code, message, data);
     }
 
-
     private static <T> R<T> result(String code, String message, T data) {
         R<T> r = new R<>();
         r.setCode(code);
@@ -56,5 +57,4 @@ public class R<T> implements Serializable {
         r.setData(data);
         return r;
     }
-
 }

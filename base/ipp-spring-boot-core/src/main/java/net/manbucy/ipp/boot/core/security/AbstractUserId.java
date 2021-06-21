@@ -1,9 +1,13 @@
 package net.manbucy.ipp.boot.core.security;
 
+import java.io.Serializable;
+
 /**
  * @author ManBu
  */
-public abstract class AbstractUserId {
+public abstract class AbstractUserId implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     public static final String PREFIX = "{";
     public static final String USER_ID_TYPE_NONE = "none";
     public static final String SUFFIX = "}";

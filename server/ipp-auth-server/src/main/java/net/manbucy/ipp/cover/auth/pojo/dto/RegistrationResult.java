@@ -60,6 +60,10 @@ public class RegistrationResult {
             return Optional.of(errorList.get(0));
         }
     }
+
+    public boolean isFail() {
+        return !success;
+    }
 }
 
 

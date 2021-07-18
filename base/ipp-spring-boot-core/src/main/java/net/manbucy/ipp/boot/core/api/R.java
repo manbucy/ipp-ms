@@ -50,7 +50,7 @@ public class R<T> implements Serializable {
         return result(code, message, data);
     }
 
-    private static <T> R<T> result(String code, String message, T data) {
+    public static <T> R<T> result(String code, String message, T data) {
         R<T> r = new R<>();
         r.setCode(code);
         r.setMsg(message);

@@ -14,6 +14,10 @@
     <version>2020.0.0-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>net.manbucy.ipp.boot</groupId>
+            <artifactId>ipp-spring-boot-core</artifactId>
+        </dependency>
         <!--web 基础-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

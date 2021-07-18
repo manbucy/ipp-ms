@@ -32,22 +32,10 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
-        <!--cloud基础-->
+        <!--cloud alibaba 基础-->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>net.manbucy.ipp.cloud</groupId>
+            <artifactId>ipp-spring-cloud-starter-alibaba</artifactId>
         </dependency>
 
         <!--文档-->

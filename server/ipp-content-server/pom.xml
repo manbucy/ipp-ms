@@ -19,33 +19,18 @@
     <dependencies>
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>
-            <artifactId>ipp-spring-boot-core</artifactId>
+            <artifactId>ipp-spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>net.manbucy.ipp.boot</groupId>
             <artifactId>ipp-spring-boot-data-mybatisplus</artifactId>
         </dependency>
-        <dependency>
-            <groupId>net.manbucy.ipp.boot</groupId>
-            <artifactId>ipp-spring-boot-starter-web</artifactId>
-        </dependency>
 
-        <!--cloud基础-->
+
+        <!--cloud alibaba 基础-->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>net.manbucy.ipp.cloud</groupId>
+            <artifactId>ipp-spring-cloud-starter-alibaba</artifactId>
         </dependency>
 
         <!--security-->

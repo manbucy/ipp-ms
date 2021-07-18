@@ -19,5 +19,6 @@ import java.io.Serializable;
 public class Q<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private String requestNo;
+    private String clientVersion;
     private T data;
 }

@@ -1,22 +1,25 @@
 package net.manbucy.ipp.cover.auth.service.impl;
 
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.ReUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.*;
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.manbucy.ipp.boot.core.constants.BaseStatus;
 import net.manbucy.ipp.cover.auth.config.properties.VerifyCodeLimitProperties;
-import net.manbucy.ipp.cover.auth.controller.user.ao.RegInfo;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegAuthType;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegCheckItem;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegCheckItemType;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegInfo;
+import net.manbucy.ipp.cover.auth.controller.user.vo.reg.RegCheckResult;
+import net.manbucy.ipp.cover.auth.controller.user.vo.reg.VerifyCodeSendResult;
 import net.manbucy.ipp.cover.auth.mapper.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationError;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
 import net.manbucy.ipp.cover.auth.pojo.entity.User;
 import net.manbucy.ipp.cover.auth.pojo.enums.AuthErrorCode;
-import net.manbucy.ipp.cover.auth.service.UserService;
+import net.manbucy.ipp.cover.auth.service.UserRegistrationService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +34,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserRegistrationServiceImpl implements UserRegistrationService {
     static final String REG_VERIFY_CODE_EMAIL_CACHE_PREFIX = "reg_verify_code:email:";
     static final String REG_VERIFY_CODE_REPEAT_SEND_KEY = "repeat_send";
     static final String REG_VERIFY_CODE_SEND_COUNT_KEY = "send_count";
@@ -56,7 +59,53 @@ public class UserServiceImpl implements UserService {
     final MailAccount mailAccount;
 
     @Override
-    public RegistrationResult checkUsername(String username) {
+    public RegCheckResult checkRegInfo(RegCheckItem regCheckItem) {
+        log.info("checkRegInfo: {}", regCheckItem);
+        if (regCheckItem == null) {
+            return new RegCheckResult(null, BaseStatus.FAIL, "参数错误");
+        }
+        final String type = regCheckItem.getType();
+        final String value = regCheckItem.getValue();
+        RegCheckItemType checkType = EnumUtil.fromString(RegCheckItemType.class, type, RegCheckItemType.OTHER);
+        RegCheckResult regCheckResult;
+        switch (checkType) {
+            case USERNAME:
+                regCheckResult = transformCheckResult(type, checkUsername(value));
+                break;
+            case EMAIL:
+                regCheckResult = transformCheckResult(type, checkUserEmail(value));
+                break;
+            case PHONE:
+                regCheckResult = transformCheckResult(type, checkUserPhone(value));
+                break;
+            default:
+                regCheckResult = new RegCheckResult(type, BaseStatus.FAIL, "暂不支持此类型数据校验");
+        }
+        return regCheckResult;
+    }
+
+
+    /**
+     * 转换校验结果
+     *
+     * @param registrationResult 注册结果
+     * @return 校验结果
+     */
+    private RegCheckResult transformCheckResult(String type, RegistrationResult registrationResult) {
+        if (registrationResult == null) {
+            return new RegCheckResult(type, BaseStatus.FAIL, "校验出错");
+        }
+        if (registrationResult.isSuccess()) {
+            return new RegCheckResult(type, BaseStatus.SUCCESS, null);
+        } else if (registrationResult.getOneError().isPresent()) {
+            RegistrationError error = registrationResult.getOneError().get();
+            return new RegCheckResult(type, error.errorCode.code, error.getMsg());
+        } else {
+            return new RegCheckResult(type, BaseStatus.FAIL, "未知错误");
+        }
+    }
+
+    private RegistrationResult checkUsername(String username) {
         if (StrUtil.isBlank(username)) {
             return RegistrationResult.fail()
                     .addError(new RegistrationError(RegistrationError.TYPE_USERNAME, AuthErrorCode.USERNAME_CHECK_ERROR)
@@ -91,8 +140,8 @@ public class UserServiceImpl implements UserService {
         return user != null;
     }
 
-    @Override
-    public RegistrationResult checkUserPhone(String phone) {
+
+    private RegistrationResult checkUserPhone(String phone) {
         RegistrationResult formatCheckResult = checkPhoneFormat(phone);
         if (!formatCheckResult.isSuccess()) {
             return formatCheckResult;
@@ -141,8 +190,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public RegistrationResult checkUserEmail(String email) {
+    private RegistrationResult checkUserEmail(String email) {
         RegistrationResult formatCheckResult = checkEmailFormat(email);
         if (!formatCheckResult.isSuccess()) {
             return formatCheckResult;
@@ -191,15 +239,56 @@ public class UserServiceImpl implements UserService {
         return user != null;
     }
 
-
     @Override
-    public RegistrationResult sendRegVerifyCodeToPhone(String phone) {
+    public VerifyCodeSendResult sendRegVerifyCodeToAuthNum(RegInfo regInfo) {
+        final String type = regInfo.getAuthType();
+        final String value = regInfo.getAuthValue();
+        RegAuthType authType = EnumUtil.fromString(RegAuthType.class, type, RegAuthType.OTHER);
+        VerifyCodeSendResult verifyCodeSendResult = new VerifyCodeSendResult();
+        RegistrationResult registrationResult = null;
+        switch (authType){
+            case PHONE:
+                registrationResult = sendRegVerifyCodeToPhone(value);
+                break;
+            case EMAIL:
+                registrationResult = sendRegVerifyCodeToEmail(value);
+                break;
+            default:
+                break;
+        }
+        if (registrationResult == null) {
+            verifyCodeSendResult.setCode(BaseStatus.FAIL);
+            verifyCodeSendResult.setMsg("发送验证码错误");
+            return verifyCodeSendResult;
+        }
+
+        // 发送验证码错误
+        if (registrationResult.isFail()) {
+            if (registrationResult.getOneError().isPresent()) {
+                RegistrationError error = registrationResult.getOneError().get();
+                verifyCodeSendResult.setCode(error.errorCode.code);
+                verifyCodeSendResult.setMsg(error.getMsg());
+                if (error.getType() == RegistrationError.TYPE_VERIFY_CODE && error.isOperateError()) {
+                    verifyCodeSendResult.setLockTime(error.getOperateLockTime());
+                }
+            } else {
+                verifyCodeSendResult.setCode(BaseStatus.FAIL);
+                verifyCodeSendResult.setMsg("未知错误");
+            }
+            return verifyCodeSendResult;
+        }
+
+        verifyCodeSendResult.setCode(BaseStatus.SUCCESS);
+        verifyCodeSendResult.setMsg("成功");
+        return verifyCodeSendResult;
+    }
+
+    private RegistrationResult sendRegVerifyCodeToPhone(String phone) {
 
         return RegistrationResult.ok();
     }
 
-    @Override
-    public RegistrationResult sendRegVerifyCodeToEmail(String email) {
+    private RegistrationResult sendRegVerifyCodeToEmail(String email) {
         RegistrationResult formatCheckResult = checkEmailFormat(email);
         if (!formatCheckResult.isSuccess()) {
             return formatCheckResult;
@@ -237,7 +326,7 @@ public class UserServiceImpl implements UserService {
         MailUtil.send(mailAccount, email, "欢迎注册【子虚物优】科技",
                 String.format("您的验证码为：%s 。请不要将验证码告诉给其他人，验证码%s分钟内有效", verifyCode,
                         verifyCodeLimitProperties.getCodeExpireTime() / 60), false);
-
+        log.info("sendRegVerifyCodeToEmail: verifyCode send success. email: {}, verifyCode: {}", email, verifyCode);
 
         // 6、存储验证码
         template.opsForValue().set(regVerifyCodeEmailKey + REG_VERIFY_CODE_KEY, verifyCode,
@@ -256,34 +345,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RegistrationResult registrationByPhone(RegInfo regInfo) {
+    public RegistrationResult register(RegInfo regInfo) {
+        final String type = regInfo.getAuthType();
+        RegAuthType authType = EnumUtil.fromString(RegAuthType.class, type, RegAuthType.OTHER);
+        switch (authType){
+            case PHONE:
+                return registrationByPhone(regInfo);
+            case EMAIL:
+                return registrationByEmail(regInfo);
+            default:
+                break;
+        }
+        return RegistrationResult.fail();
+    }
+
+    private RegistrationResult registrationByPhone(RegInfo regInfo) {
         RegistrationResult commonCheckResult = registrationCommonCheck(regInfo);
         if (!commonCheckResult.isSuccess()) {
             return commonCheckResult;
         }
         // 校验手机号码
-        RegistrationResult phoneCheckResult = checkUserPhone(regInfo.getPhone());
+        String phone = regInfo.getAuthValue();
+        RegistrationResult phoneCheckResult = checkUserPhone(phone);
         if (!phoneCheckResult.isSuccess()) {
             return phoneCheckResult;
         }
         return null;
     }
 
-    @Override
-    public RegistrationResult registrationByEmail(RegInfo regInfo) {
+    private RegistrationResult registrationByEmail(RegInfo regInfo) {
         RegistrationResult commonCheck = registrationCommonCheck(regInfo);
         if (!commonCheck.isSuccess()) {
             return commonCheck;
         }
-
+        String email = regInfo.getAuthValue();
         // 校验电子邮箱
-        RegistrationResult emailCheckResult = checkUserEmail(regInfo.getEmail());
+        RegistrationResult emailCheckResult = checkUserEmail(email);
         if (!emailCheckResult.isSuccess()) {
             return emailCheckResult;
         }
 
         // 验证 验证码
-        final String regVerifyCodeEmailKey = REG_VERIFY_CODE_EMAIL_CACHE_PREFIX + regInfo.getEmail() + ":";
+        final String regVerifyCodeEmailKey = REG_VERIFY_CODE_EMAIL_CACHE_PREFIX + email + ":";
         String verifyCode = template.opsForValue().getAndSet(regVerifyCodeEmailKey + REG_VERIFY_CODE_KEY, "");
         template.delete(regVerifyCodeEmailKey + REG_VERIFY_CODE_KEY);
         if (!regInfo.getVerifyCode().equals(verifyCode)) {
@@ -345,18 +448,21 @@ public class UserServiceImpl implements UserService {
         user.setUsername(regInfo.getUsername());
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(regInfo.getPassword()));
-        user.setPhone(regInfo.getPhone());
-        user.setEmail(regInfo.getEmail());
+        if (RegAuthType.PHONE.toString().equals(regInfo.getAuthType())) {
+            user.setPhone(regInfo.getAuthValue());
+        } else if (RegAuthType.EMAIL.toString().equals(regInfo.getAuthType())) {
+            user.setEmail(regInfo.getAuthValue());
+        }
         user.setLocked(false);
 
-        try{
+        try {
             int rows = userMapper.insert(user);
             if (rows != 1) {
                 return RegistrationResult.fail()
                         .addError(new RegistrationError(RegistrationError.TYPE_OTHER, AuthErrorCode.USER_REGISTRATION_ERROR)
                                 .operateError("创建用户失败"));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             return RegistrationResult.fail()
                     .addError(new RegistrationError(RegistrationError.TYPE_OTHER, AuthErrorCode.USER_REGISTRATION_ERROR)
                             .operateError("创建用户失败"));

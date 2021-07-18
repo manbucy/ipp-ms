@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class EnhanceAuthenticationToken extends AbstractAuthenticationToken {
 
+    private static final long serialVersionUID = 1L;
     /**
      * 授权登录类型
      */

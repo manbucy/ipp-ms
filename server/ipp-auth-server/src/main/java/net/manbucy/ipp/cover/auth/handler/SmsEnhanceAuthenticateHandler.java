@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
+ * 短信验证码登录
+ *
  * @author ManBu
  */
 @Slf4j

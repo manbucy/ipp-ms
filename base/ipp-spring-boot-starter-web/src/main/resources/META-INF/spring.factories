@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+net.manbucy.ipp.boot.web.config.BaseCustomerConfiguration

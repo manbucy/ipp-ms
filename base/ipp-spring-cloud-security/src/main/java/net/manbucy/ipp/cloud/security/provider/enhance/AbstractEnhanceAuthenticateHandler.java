@@ -28,10 +28,15 @@ public abstract class AbstractEnhanceAuthenticateHandler {
     /**
      * 获取当前类的 authType
      *
-     * @return
+     * @return authType
      */
     protected abstract String getAuthType();
 
+    /**
+     * 获取 User
+     * @param credentials 凭证
+     * @return 查询到的用户User
+     */
     protected abstract UserDetails retrieveUser(Map<String, String> credentials);
 
     private void checkUser(UserDetails user) {

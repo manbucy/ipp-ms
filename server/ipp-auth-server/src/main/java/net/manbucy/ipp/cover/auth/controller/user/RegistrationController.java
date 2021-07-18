@@ -1,13 +1,23 @@
 package net.manbucy.ipp.cover.auth.controller.user;
 
 import lombok.RequiredArgsConstructor;
-import net.manbucy.ipp.boot.core.api.BaseApiCode;
+import net.manbucy.ipp.boot.core.api.Q;
 import net.manbucy.ipp.boot.core.api.R;
-import net.manbucy.ipp.cover.auth.controller.user.ao.RegInfo;
+import net.manbucy.ipp.boot.core.constants.BaseStatus;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegCheckItem;
+import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegInfo;
+import net.manbucy.ipp.cover.auth.controller.user.vo.reg.RegCheckResult;
+import net.manbucy.ipp.cover.auth.controller.user.vo.reg.VerifyCodeSendResult;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationError;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
-import net.manbucy.ipp.cover.auth.service.UserService;
-import org.springframework.web.bind.annotation.*;
+import net.manbucy.ipp.cover.auth.service.UserRegistrationService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ManBu
@@ -16,70 +26,52 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reg")
 @RequiredArgsConstructor
 public class RegistrationController {
-    final UserService userService;
+    final UserRegistrationService userRegistrationService;
 
-
-
-    @GetMapping("/check/username")
-    public R<String> checkUsername(@RequestBody RegInfo regInfo) {
-        RegistrationResult usernameCheckResult = userService.checkUsername(regInfo.getUsername());
-        return parseCommonRegResult(usernameCheckResult);
+    @PostMapping("/checkRegInfo")
+    public R<RegCheckResult> checkRegInfo(@RequestBody Q<RegCheckItem> regCheckItemQ) {
+        RegCheckResult regCheckResult = userRegistrationService.checkRegInfo(regCheckItemQ.getData());
+        return R.<RegCheckResult>builder()
+                .code(regCheckResult.getCode())
+                .msg(regCheckResult.getMsg())
+                .data(regCheckResult)
+                .build();
     }
 
-    @GetMapping("/check/phone")
-    public R<String> checkPhone(@RequestBody RegInfo regInfo) {
-        RegistrationResult phoneCheckResult = userService.checkUserPhone(regInfo.getPhone());
-        return parseCommonRegResult(phoneCheckResult);
-    }
-
-    @GetMapping("/check/email")
-    public R<String> checkEmail(@RequestBody RegInfo regInfo) {
-        RegistrationResult emailCheckResult = userService.checkUserEmail(regInfo.getEmail());
-        return parseCommonRegResult(emailCheckResult);
-    }
-
-    @PostMapping("/code/phone")
-    public R<String> sendRegVerifyCodeToPhone(@RequestBody RegInfo regInfo) {
-        RegistrationResult codeSendResult = userService.sendRegVerifyCodeToPhone(regInfo.getPhone());
-        return parseCommonRegResult(codeSendResult);
-    }
-
-    @PostMapping("/code/email")
-    public R<String> sendRegVerifyCodeToEmail(@RequestBody RegInfo regInfo) {
-        RegistrationResult codeSendResult = userService.sendRegVerifyCodeToEmail(regInfo.getEmail());
-        if (!codeSendResult.isSuccess()) {
-            if (codeSendResult.getOneError().isPresent()) {
-                RegistrationError error = codeSendResult.getOneError().get();
-                String data = error.getType() == RegistrationError.TYPE_VERIFY_CODE && error.isOperateError() ?
-                        String.valueOf(error.getOperateLockTime()) : null;
-                return R.failed(error.errorCode.code, error.getMsg(), data);
-            }
-            return R.failed(BaseApiCode.FAIL.code, "未知错误", null);
+    @PostMapping("/checkRegInfos")
+    public R<List<RegCheckResult>> checkRegInfos(@RequestBody Q<List<RegCheckItem>> regCheckItemListQ) {
+        List<RegCheckResult> regCheckResultList = new ArrayList<>();
+        for (RegCheckItem regCheckItem : regCheckItemListQ.getData()) {
+            regCheckResultList.add(userRegistrationService.checkRegInfo(regCheckItem));
         }
-
-        return R.ok();
+        boolean checkPassed = regCheckResultList.stream().allMatch(regCheckResult -> BaseStatus.SUCCESS.equals(regCheckResult.getCode()));
+        return R.<List<RegCheckResult>>builder()
+                .code(checkPassed ? BaseStatus.SUCCESS : BaseStatus.FAIL)
+                .msg(checkPassed ? "校验通过" : "校验不通过")
+                .data(regCheckResultList)
+                .build();
     }
 
-    @PostMapping("/phone")
-    public R<String> registerByPhone(@RequestBody RegInfo regInfo) {
-        RegistrationResult result = userService.registrationByPhone(regInfo);
-        return parseCommonRegResult(result);
+    @PostMapping("/sendVerifyCode")
+    public R<VerifyCodeSendResult> sendRegVerifyCodeToAuthNum(@RequestBody Q<RegInfo> regInfoQ){
+        VerifyCodeSendResult verifyCodeSendResult = userRegistrationService.sendRegVerifyCodeToAuthNum(regInfoQ.getData());
+        return R.<VerifyCodeSendResult>builder()
+                .code(verifyCodeSendResult.getCode())
+                .msg(verifyCodeSendResult.getMsg())
+                .data(verifyCodeSendResult)
+                .build();
     }
 
-    @PostMapping("/email")
-    public R<String> registerByEmail(@RequestBody RegInfo regInfo) {
-        RegistrationResult result = userService.registrationByEmail(regInfo);
-        return parseCommonRegResult(result);
-    }
-
-    private R<String> parseCommonRegResult(RegistrationResult result) {
-        if (!result.isSuccess()) {
+    @PostMapping
+    public R<RegistrationResult> register(@RequestBody Q<RegInfo> regInfoQ) {
+        RegistrationResult result = userRegistrationService.register(regInfoQ.getData());
+        if (result.isFail()) {
             if (result.getOneError().isPresent()) {
                 RegistrationError error = result.getOneError().get();
-                return R.failed(error.errorCode.code, error.getMsg(), null);
+                return R.failed(error.errorCode.code, error.getMsg(), result);
             }
-            return R.failed(BaseApiCode.FAIL.code, "未知错误", null);
+            return R.failed(BaseStatus.FAIL, "未知错误", result);
         }
-        return R.ok();
+        return R.ok(result);
     }
 }

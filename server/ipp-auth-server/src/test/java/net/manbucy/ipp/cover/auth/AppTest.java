@@ -10,7 +10,6 @@ import net.manbucy.ipp.cover.auth.mapper.PermissionMapper;
 import net.manbucy.ipp.cover.auth.mapper.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.UserDTO;
 import net.manbucy.ipp.cover.auth.pojo.entity.Permission;
-import net.manbucy.ipp.cover.auth.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.annotation.Resource;

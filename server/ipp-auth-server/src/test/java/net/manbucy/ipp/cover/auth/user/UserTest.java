@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegAuthType;
 import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegInfo;
 import net.manbucy.ipp.cover.auth.controller.user.vo.reg.VerifyCodeSendResult;
-import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
 import net.manbucy.ipp.cover.auth.service.UserRegistrationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

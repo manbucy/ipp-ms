@@ -37,8 +37,8 @@ public class AppTest {
     @Resource
     private PermissionMapper permissionMapper;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+//    @Autowired
+//    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     public void getEncryptPwd() {
@@ -91,15 +91,15 @@ public class AppTest {
 
     @Test
     public void test_update_auto_audit_entity_meta_object() {
-        UserDetails userDetail = userDetailsService.loadUserByUsername("admin");
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetail, null);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        Permission permission = new Permission();
-        permission.setName("testUpdateAutoAudit");
-        permission.setId(3L);
-
-        permissionMapper.updateById(permission);
+//        UserDetails userDetail = userDetailsService.loadUserByUsername("admin");
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetail, null);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        Permission permission = new Permission();
+//        permission.setName("testUpdateAutoAudit");
+//        permission.setId(3L);
+//
+//        permissionMapper.updateById(permission);
 
     }
 

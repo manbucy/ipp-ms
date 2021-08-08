@@ -5,7 +5,6 @@ package net.manbucy.ipp.boot.core.constants;
  *
  * @author ManBu
  */
-
 public class BaseStatus {
     /**
      * 成功

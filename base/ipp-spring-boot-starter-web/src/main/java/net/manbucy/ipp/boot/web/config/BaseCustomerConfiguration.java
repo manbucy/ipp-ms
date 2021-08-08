@@ -3,12 +3,14 @@ package net.manbucy.ipp.boot.web.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author ManBu
  */
 @Configuration
+@ComponentScan("net.manbucy.ipp.boot.web")
 public class BaseCustomerConfiguration {
     @Bean
     public ObjectMapper objectMapper() {

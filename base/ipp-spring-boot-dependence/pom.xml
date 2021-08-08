@@ -145,17 +145,6 @@
             <resource>
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>**/META-INF/**</include>
-                    <include>**/templates/**</include>
-                    <include>**/application*.yml</include>
-                    <include>**/application*.yaml</include>
-                    <include>**/application*.properties</include>
-                    <include>**/bootstrap*.yml</include>
-                    <include>**/bootstrap*.yaml</include>
-                    <include>**/bootstrap*.properties</include>
-                    <include>**/*.xml</include>
-                </includes>
             </resource>
             <resource>
                 <filtering>true</filtering>

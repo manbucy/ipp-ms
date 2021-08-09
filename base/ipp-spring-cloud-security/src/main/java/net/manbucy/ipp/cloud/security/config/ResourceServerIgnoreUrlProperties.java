@@ -10,9 +10,9 @@ import java.util.Set;
 /**
  * @author ManBu
  */
-@ConfigurationProperties("spring.security.oauth2.resourceserver")
 @Data
 @RefreshScope
+@ConfigurationProperties("spring.security.oauth2.resource-server")
 public class ResourceServerIgnoreUrlProperties {
     private Set<String> ignoreUrl = new HashSet<>();
 }

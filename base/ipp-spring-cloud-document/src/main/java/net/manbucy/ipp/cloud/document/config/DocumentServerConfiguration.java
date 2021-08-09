@@ -1,0 +1,24 @@
+package net.manbucy.ipp.cloud.document.config;
+
+import lombok.RequiredArgsConstructor;
+import net.manbucy.ipp.cloud.document.provider.IppSwaggerResourceProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
+
+/**
+ * @author ManBu
+ * @date 2021/8/9 22:18
+ */
+@Configuration
+@RequiredArgsConstructor
+public class DocumentServerConfiguration {
+    private final Environment environment;
+
+    @Bean
+    @Primary
+    public IppSwaggerResourceProvider ippSwaggerResourceProvider() {
+        return new IppSwaggerResourceProvider(environment);
+    }
+}

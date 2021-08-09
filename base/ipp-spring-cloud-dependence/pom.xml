@@ -56,6 +56,12 @@
 
             <dependency>
                 <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-document</artifactId>
+                <version>${ipp-frame.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
                 <artifactId>ipp-spring-cloud-starter-alibaba</artifactId>
                 <version>${ipp-frame.version}</version>
             </dependency>

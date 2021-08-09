@@ -40,8 +40,8 @@
 
         <!--文档-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
+            <groupId>net.manbucy.ipp.cloud</groupId>
+            <artifactId>ipp-spring-cloud-document</artifactId>
         </dependency>
 
         <!--测试-->

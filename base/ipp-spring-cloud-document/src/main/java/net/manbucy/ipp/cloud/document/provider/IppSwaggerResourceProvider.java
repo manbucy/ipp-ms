@@ -1,13 +1,14 @@
-package net.manbucy.ipp.cover.gateway.swagger;
+package net.manbucy.ipp.cloud.document.provider;
 
 import cn.hutool.core.util.StrUtil;
+import net.manbucy.ipp.cloud.document.config.properties.DocumentProviderProperties;
+import net.manbucy.ipp.cloud.document.constants.SwaggerDocumentVersion;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.EmitUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.SwaggerResource;
@@ -24,8 +25,6 @@ import static springfox.documentation.schema.ClassSupport.classByName;
  * @author ManBu
  * @date 2021/8/8 22:19
  */
-@Component
-@Primary
 public class IppSwaggerResourceProvider implements SwaggerResourcesProvider, ApplicationContextAware {
     private final String swagger1Url;
     private final String swagger2Url;
@@ -35,15 +34,18 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider, App
     private boolean swagger1Available;
     private boolean swagger2Available;
 
-    private final List<SwaggerServerConfig> swaggerServerConfigs;
+    private final List<DocumentProviderProperties> providerConfigs;
 
-    @Autowired
     public IppSwaggerResourceProvider(Environment environment) {
         swagger1Url = environment.getProperty("springfox.documentation.swagger.v1.path", "/api-docs");
         swagger2Url = fixup(environment.getProperty("springfox.documentation.swagger.v2.path", "/v2/api-docs"));
         oas3Url = fixup(environment.getProperty("springfox.documentation.open-api.v3.path", "/v3/api-docs"));
-        swaggerServerConfigs = new ArrayList<>();
-        swaggerServerConfigs.add(new SwaggerServerConfig().setServerContext("auth").setGroupName("ipp-auth-api").setVersion("v3"));
+        providerConfigs = new ArrayList<>();
+        DocumentProviderProperties authConfig = new DocumentProviderProperties();
+        authConfig.setContext("auth");
+        authConfig.setGroupName("ipp-auth-api");
+        authConfig.setVersion(SwaggerDocumentVersion.V3);
+        providerConfigs.add(authConfig);
     }
 
     private String fixup(String path) {
@@ -56,21 +58,21 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider, App
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
-        for (SwaggerServerConfig swaggerServerConfig : swaggerServerConfigs) {
-            if (swagger1Available && StrUtil.equalsIgnoreCase(SwaggerVersion.v1.toString(), swaggerServerConfig.version)) {
-                SwaggerResource swaggerResource = resource(swaggerServerConfig, swagger1Url);
+        for (DocumentProviderProperties providerInfo : providerConfigs) {
+            if (swagger1Available && SwaggerDocumentVersion.V1 == providerInfo.getVersion()) {
+                SwaggerResource swaggerResource = resource(providerInfo, swagger1Url);
                 swaggerResource.setSwaggerVersion("1.2");
                 resources.add(swaggerResource);
             }
 
-            if (swagger2Available && StrUtil.equalsIgnoreCase(SwaggerVersion.v2.toString(), swaggerServerConfig.version)) {
-                SwaggerResource swaggerResource = resource(swaggerServerConfig, swagger2Url);
+            if (swagger2Available && SwaggerDocumentVersion.V2 == providerInfo.getVersion()) {
+                SwaggerResource swaggerResource = resource(providerInfo, swagger2Url);
                 swaggerResource.setSwaggerVersion("2.0");
                 resources.add(swaggerResource);
             }
 
-            if (oas3Available && StrUtil.equalsIgnoreCase(SwaggerVersion.v3.toString(), swaggerServerConfig.version)) {
-                SwaggerResource swaggerResource = resource(swaggerServerConfig, oas3Url);
+            if (oas3Available && SwaggerDocumentVersion.V3 == providerInfo.getVersion()) {
+                SwaggerResource swaggerResource = resource(providerInfo, oas3Url);
                 swaggerResource.setSwaggerVersion("3.0.3");
                 resources.add(swaggerResource);
             }
@@ -79,19 +81,19 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider, App
         return resources;
     }
 
-    private SwaggerResource resource(SwaggerServerConfig swaggerServerConfig, String baseUrl) {
+    private SwaggerResource resource(DocumentProviderProperties providerInfo, String baseUrl) {
         SwaggerResource swaggerResource = new SwaggerResource();
-        swaggerResource.setName(swaggerServerConfig.groupName);
-        swaggerResource.setUrl(swaggerLocation(baseUrl, swaggerServerConfig));
+        swaggerResource.setName(providerInfo.getGroupName());
+        swaggerResource.setUrl(swaggerLocation(baseUrl, providerInfo));
         return swaggerResource;
     }
 
-    private String swaggerLocation(String swaggerUrl, SwaggerServerConfig swaggerServerConfig) {
-        String base = "/" + swaggerServerConfig.serverContext + "/" + of(swaggerUrl).get();
-        if (Docket.DEFAULT_GROUP_NAME.equals(swaggerServerConfig.groupName)) {
+    private String swaggerLocation(String swaggerUrl, DocumentProviderProperties providerInfo) {
+        String base = "/" + providerInfo.getContext() + "/" + of(swaggerUrl).get();
+        if (Docket.DEFAULT_GROUP_NAME.equals(providerInfo.getGroupName())) {
             return base;
         }
-        return base + "?group=" + swaggerServerConfig.groupName;
+        return base + "?group=" + providerInfo.getGroupName();
     }
 
     @Override
@@ -105,42 +107,5 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider, App
 
         oas3Available = (classByName("springfox.documentation.oas.web.OpenApiControllerWebFlux", classLoader).isPresent()
                 || classByName("springfox.documentation.oas.web.OpenApiControllerWebMvc", classLoader).isPresent());
-    }
-
-    public static class SwaggerServerConfig {
-        protected String serverContext;
-        protected String groupName;
-        protected String version;
-
-        public String getServerContext() {
-            return serverContext;
-        }
-
-        public SwaggerServerConfig setServerContext(String serverContext) {
-            this.serverContext = serverContext;
-            return this;
-        }
-
-        public String getGroupName() {
-            return groupName;
-        }
-
-        public SwaggerServerConfig setGroupName(String groupName) {
-            this.groupName = groupName;
-            return this;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public SwaggerServerConfig setVersion(String version) {
-            this.version = version;
-            return this;
-        }
-    }
-
-    public static enum SwaggerVersion {
-        v1, v2, v3;
     }
 }

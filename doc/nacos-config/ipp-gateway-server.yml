@@ -1,10 +1,4 @@
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        ignore-url:
-          - /hello/**
-          - /documentation/**
   redis:
     database: 0
     host: 192.168.169.2
@@ -12,23 +6,23 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - StripPrefix=1 # 也可使用 RewritePath
+        # 也可使用 RewritePath 代替 StripPrefix
+        - StripPrefix=1
         - AddRequestHeader=X-test, hello
       nacos-metadata-balancer:
         enabled: true
         key: VERSION
+      security-http-api:
+        enabled: true
+        aes-key: 076776ef4b774ef5
       routes:
         - id: ipp-auth-server
           uri: lb://ipp-auth-server
           predicates:
             - Path=/auth/**
           filters:
-#            AccessForbidden 禁止访问过滤器，匹配路径成功后返回403
-#            - AccessForbidden=/test/redis/**,/hello
-            - name: AccessForbidden
-              args:
-                - /test/redis/**
-                - /hello
+            # AccessForbidden 禁止访问过滤器，匹配路径成功后返回403
+            - AccessForbidden=/test/redis/**
             - AddRequestParameter=server, auth
         - id: ipp-product-server
           uri: lb://ipp-product-server

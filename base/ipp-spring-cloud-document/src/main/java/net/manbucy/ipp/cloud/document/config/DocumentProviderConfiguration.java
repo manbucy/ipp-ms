@@ -7,6 +7,7 @@ import net.manbucy.ipp.cloud.document.constants.SwaggerDocumentVersion;
 import net.manbucy.ipp.cloud.document.endpoint.DocumentProviderInfoEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -18,6 +19,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @RequiredArgsConstructor
 public class DocumentProviderConfiguration {
     private final DocumentProviderProperties providerInfo;
+    private final Environment environment;
 
     @Bean
     public Docket authApi() {
@@ -34,6 +36,6 @@ public class DocumentProviderConfiguration {
 
     @Bean
     public DocumentProviderInfoEndpoint documentProviderInfoEndpoint() {
-        return new DocumentProviderInfoEndpoint(providerInfo);
+        return new DocumentProviderInfoEndpoint(providerInfo, environment);
     }
 }

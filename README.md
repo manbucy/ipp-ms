@@ -24,4 +24,9 @@
 | ipp-auth-server | http://localhost:48000/auth/documentation/swagger-ui/ |  
 | ipp-admin-server | http://localhost:48000/admin/documentation/swagger-ui/ |  
 | ipp-product-server | http://localhost:48000/product/documentation/swagger-ui/ |  
-| ipp-content-server | http://localhost:48000/content/documentation/swagger-ui/ |  
+| ipp-content-server | http://localhost:48000/content/documentation/swagger-ui/ |
+
+
+# 鸣谢
+感谢 [JetBrains](https://www.jetbrains.com/) 对本项目的支持。  
+![JetBrains](doc/image/jetbrains.svg)

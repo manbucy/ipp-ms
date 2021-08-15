@@ -6,7 +6,7 @@ import net.manbucy.ipp.boot.core.security.SystemUserId;
 import net.manbucy.ipp.boot.core.security.UserDetail;
 import net.manbucy.ipp.cloud.security.constants.SecurityConstants;
 import net.manbucy.ipp.cloud.security.provider.enhance.AbstractEnhanceAuthenticateHandler;
-import net.manbucy.ipp.cover.auth.mapper.UserMapper;
+import net.manbucy.ipp.cover.auth.mapper.user.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.RoleDTO;
 import net.manbucy.ipp.cover.auth.pojo.dto.UserDTO;
 import org.springframework.security.authentication.BadCredentialsException;

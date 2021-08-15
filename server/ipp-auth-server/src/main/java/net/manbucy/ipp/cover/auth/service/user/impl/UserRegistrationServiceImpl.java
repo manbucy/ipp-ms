@@ -1,4 +1,4 @@
-package net.manbucy.ipp.cover.auth.service.impl;
+package net.manbucy.ipp.cover.auth.service.user.impl;
 
 import cn.hutool.core.util.*;
 import cn.hutool.extra.mail.MailAccount;
@@ -14,12 +14,12 @@ import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegCheckItemType;
 import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegInfo;
 import net.manbucy.ipp.cover.auth.controller.user.vo.reg.RegCheckResult;
 import net.manbucy.ipp.cover.auth.controller.user.vo.reg.VerifyCodeSendResult;
-import net.manbucy.ipp.cover.auth.mapper.UserMapper;
+import net.manbucy.ipp.cover.auth.mapper.user.UserMapper;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationError;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
-import net.manbucy.ipp.cover.auth.pojo.entity.User;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.User;
 import net.manbucy.ipp.cover.auth.pojo.enums.AuthErrorCode;
-import net.manbucy.ipp.cover.auth.service.UserRegistrationService;
+import net.manbucy.ipp.cover.auth.service.user.UserRegistrationService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -451,7 +451,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         if (RegAuthType.PHONE.toString().equals(regInfo.getAuthType())) {
             user.setPhone(regInfo.getAuthValue());
         } else if (RegAuthType.EMAIL.toString().equals(regInfo.getAuthType())) {
-            user.setEmail(regInfo.getAuthValue());
+//            user.setEmail(regInfo.getAuthValue());
         }
         user.setLocked(false);
 

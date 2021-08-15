@@ -1,4 +1,4 @@
-package net.manbucy.ipp.cover.auth.service;
+package net.manbucy.ipp.cover.auth.service.user;
 
 import net.manbucy.ipp.cover.auth.controller.user.ao.reg.RegCheckItem;
 import net.manbucy.ipp.cover.auth.controller.user.vo.reg.RegCheckResult;

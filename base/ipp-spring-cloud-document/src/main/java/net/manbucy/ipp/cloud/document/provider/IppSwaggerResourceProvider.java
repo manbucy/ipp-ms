@@ -21,7 +21,7 @@ import java.util.Optional;
  * @date 2021/8/8 22:19
  */
 @Slf4j
-public class IppSwaggerResourceProvider implements SwaggerResourcesProvider{
+public class IppSwaggerResourceProvider implements SwaggerResourcesProvider {
 
     private final DiscoveryClient discoveryClient;
 
@@ -40,7 +40,7 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider{
 
     @Override
     public List<SwaggerResource> get() {
-        List<SwaggerResource> resources =getSwaggerResourceListFromService();
+        List<SwaggerResource> resources = getSwaggerResourceListFromService();
         Collections.sort(resources);
         return resources;
     }
@@ -54,13 +54,13 @@ public class IppSwaggerResourceProvider implements SwaggerResourcesProvider{
             if (serviceInstanceOpt.isPresent()) {
                 ServiceInstance serviceInstance = serviceInstanceOpt.get();
                 String url = String.format(providerConfigEndPointUrl, serviceInstance.getHost(), serviceInstance.getPort());
-                try{
+                try {
                     String resourceJson = restTemplate.getForEntity(url, String.class).getBody();
                     if (StrUtil.isNotBlank(resourceJson)) {
                         List<SwaggerResource> swaggerResources = JSONUtil.toList(resourceJson, SwaggerResource.class);
                         resources.addAll(swaggerResources);
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     log.info("get doc info from url:[{}] fail", url);
                 }
             }

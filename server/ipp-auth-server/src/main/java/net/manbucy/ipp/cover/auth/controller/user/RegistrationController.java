@@ -10,7 +10,7 @@ import net.manbucy.ipp.cover.auth.controller.user.vo.reg.RegCheckResult;
 import net.manbucy.ipp.cover.auth.controller.user.vo.reg.VerifyCodeSendResult;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationError;
 import net.manbucy.ipp.cover.auth.pojo.dto.RegistrationResult;
-import net.manbucy.ipp.cover.auth.service.UserRegistrationService;
+import net.manbucy.ipp.cover.auth.service.user.UserRegistrationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

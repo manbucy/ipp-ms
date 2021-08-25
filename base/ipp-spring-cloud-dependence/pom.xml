@@ -17,8 +17,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2020.0.1</spring-cloud.version>
+
+        <!-- https://github.com/spring-cloud/spring-cloud-release -->
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
+
         <spring-cloud-security.version>3.0.0-RC1</spring-cloud-security.version>
+
+        <!-- https://github.com/alibaba/spring-cloud-alibaba -->
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
     </properties>
 

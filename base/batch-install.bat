@@ -13,4 +13,5 @@ if "%1" == "" (
     cd %1
     mvn clean
     mvn install
+    cd %base_path%
 )

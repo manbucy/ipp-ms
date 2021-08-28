@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.manbucy.ipp</groupId>
+        <artifactId>ipp-ms-base</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <groupId>net.manbucy.ipp.boot</groupId>
+    <artifactId>ipp-spring-boot-dependence</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring-boot.version>2.5.4</spring-boot.version>
+        <ipp-boot.version>${revision}</ipp-boot.version>
+        <druid-starter.version>1.2.4</druid-starter.version>
+        <mybatis-plush.version>3.4.1</mybatis-plush.version>
+        <hutool.version>5.6.3</hutool.version>
+        <java.mail.version>1.4.7</java.mail.version>
+        <springfox.version>3.0.0</springfox.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plush.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plush.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${java.mail.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-core</artifactId>
+                <version>${ipp-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-data-mybatisplus</artifactId>
+                <version>${ipp-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-starter-web</artifactId>
+                <version>${ipp-boot.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <pomElements>
+                                <parent>remove</parent>
+                                <build>remove</build>
+                                <properties>expand</properties>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

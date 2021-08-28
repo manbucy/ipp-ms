@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.manbucy.ipp</groupId>
+        <artifactId>ipp-ms-base</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <groupId>net.manbucy.ipp.cloud</groupId>
+    <artifactId>ipp-spring-cloud-dependence</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- https://github.com/spring-cloud/spring-cloud-release -->
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
+
+        <ipp-cloud.version>${revision}</ipp-cloud.version>
+
+        <spring-cloud-security.version>3.0.0-RC1</spring-cloud-security.version>
+
+        <!-- https://github.com/alibaba/spring-cloud-alibaba -->
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-dependence</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-security-dependencies</artifactId>
+                <version>${spring-cloud-security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-security</artifactId>
+                <version>${ipp-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-document</artifactId>
+                <version>${ipp-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-starter-alibaba</artifactId>
+                <version>${ipp-cloud.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <pomElements>
+                                <parent>remove</parent>
+                                <build>remove</build>
+                                <properties>expand</properties>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

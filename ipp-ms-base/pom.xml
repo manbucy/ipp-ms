@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.manbucy.ipp</groupId>
+    <artifactId>ipp-ms-base</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>boot/ipp-spring-boot-core</module>
+        <module>boot/ipp-spring-boot-data-mybatisplus</module>
+        <module>boot/ipp-spring-boot-dependence</module>
+        <module>boot/ipp-spring-boot-starter-web</module>
+        <module>cloud/ipp-spring-cloud-dependence</module>
+        <module>cloud/ipp-spring-cloud-document</module>
+        <module>cloud/ipp-spring-cloud-security</module>
+        <module>cloud/ipp-spring-cloud-starter-alibaba</module>
+    </modules>
+
+    <properties>
+        <revision>2020.0.0-SNAPSHOT</revision>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <flatten-maven-plugin.version>1.2.5</flatten-maven-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.manbucy.ipp.boot</groupId>
+                <artifactId>ipp-spring-boot-dependence</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>net.manbucy.ipp.cloud</groupId>
+                <artifactId>ipp-spring-cloud-dependence</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

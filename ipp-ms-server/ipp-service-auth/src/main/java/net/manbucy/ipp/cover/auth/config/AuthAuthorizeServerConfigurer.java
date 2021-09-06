@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -37,8 +35,6 @@ public class AuthAuthorizeServerConfigurer extends AuthorizationServerConfigurer
 
     final DataSource dataSource;
 
-    final UserDetailsService userDetailsService;
-
     final List<AbstractEnhanceAuthenticateHandler> enhanceAuthList;
 
     @Override
@@ -61,13 +57,10 @@ public class AuthAuthorizeServerConfigurer extends AuthorizationServerConfigurer
     }
 
     public AuthenticationManager providerManager() {
-        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-        daoProvider.setUserDetailsService(userDetailsService);
-
         EnhanceAuthenticationProvider enhanceProvider = new EnhanceAuthenticationProvider();
         enhanceProvider.setAuthenticateHandlerList(enhanceAuthList);
 
-        return new ProviderManager(daoProvider, enhanceProvider);
+        return new ProviderManager(enhanceProvider);
     }
 
 

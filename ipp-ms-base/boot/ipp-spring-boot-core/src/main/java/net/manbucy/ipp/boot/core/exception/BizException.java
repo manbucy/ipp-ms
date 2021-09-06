@@ -8,7 +8,7 @@ import net.manbucy.ipp.boot.core.constants.BaseStatus;
  */
 @Getter
 public class BizException extends RuntimeException {
-    private static final long serialVersionUID = 6739734403797590421L;
+    private static final long serialVersionUID = 1L;
     private final String code;
     private String msg;
     private Object data;

@@ -16,6 +16,7 @@
 
     <properties>
         <spring-boot.version>2.5.4</spring-boot.version>
+        <spring-security-oauth2-authorization-server.version>0.2.0</spring-security-oauth2-authorization-server.version>
         <ipp-boot.version>${revision}</ipp-boot.version>
         <druid-starter.version>1.2.4</druid-starter.version>
         <mybatis-plush.version>3.4.1</mybatis-plush.version>
@@ -32,6 +33,12 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-security-oauth2-authorization-server.version}</version>
             </dependency>
 
             <dependency>

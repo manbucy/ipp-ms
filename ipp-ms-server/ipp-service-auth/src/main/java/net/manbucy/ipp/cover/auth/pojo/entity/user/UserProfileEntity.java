@@ -14,11 +14,10 @@ import lombok.ToString;
 
 /**
  * <p>
- * 系统用户表
+ * 
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
  */
 @Data
 @Builder
@@ -26,39 +25,27 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("ipp_user")
-@Schema(name= "User对象", title= "系统用户表")
-public class User extends BaseEntity {
+@TableName("s_user_profile")
+@Schema(name= "UserProfile对象", title= "")
+public class UserProfileEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "用户名")
-    @TableField("username")
-    private String username;
+    @Schema(name = "用户Id")
+    @TableField("user_id")
+    private Long userId;
 
-    @Schema(name = "密码")
-    @TableField("password")
-    private String password;
+    @Schema(name = "用户昵称")
+    @TableField("nickname")
+    private String nickname;
 
-    @Schema(name = "姓名")
-    @TableField("name")
-    private String name;
-
-    @Schema(name = "手机号码")
-    @TableField("phone")
-    private String phone;
-
-    @Schema(name = "电子邮件")
-    @TableField("email")
-    private String email;
-
-    @Schema(name = "头像地址")
+    @Schema(name = "用户头像地址")
     @TableField("avatar")
     private String avatar;
 
-    @Schema(name = "是否禁用")
-    @TableField("is_locked")
-    private Boolean locked;
+    @Schema(name = "个性签名")
+    @TableField("signature")
+    private String signature;
 
 
 }

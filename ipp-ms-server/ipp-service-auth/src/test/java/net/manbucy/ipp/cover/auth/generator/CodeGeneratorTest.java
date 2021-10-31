@@ -28,7 +28,8 @@ public class CodeGeneratorTest {
                 .dataSourceConfig(getDataSourceConfig())
                 .parentPackage("net.manbucy.ipp.cover.auth")
                 .moduleName("user")
-                .tableNames(new String[]{"ipp_permission", "ipp_role", "ipp_role_permission", "ipp_user", "ipp_user_profile", "ipp_user_role"})
+                .tableNames(new String[]{"s_permission", "s_role", "s_role_permission", "s_user", "s_user_profile", "s_user_role"})
+                .tablePrefix("s")
 //                .fileOverride(true)
                 .build();
 

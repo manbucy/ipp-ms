@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 统一数据响应体
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @Builder
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
+    private LocalDateTime timestamp;
     private String code;
     private String msg;
     private T data;
@@ -55,6 +57,7 @@ public class R<T> implements Serializable {
         r.setCode(code);
         r.setMsg(message);
         r.setData(data);
+        r.setTimestamp(LocalDateTime.now());
         return r;
     }
 }

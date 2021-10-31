@@ -1,4 +1,4 @@
-package net.manbucy.ipp.cover.auth.handler;
+package net.manbucy.ipp.cover.auth.handler.login;
 
 import lombok.extern.slf4j.Slf4j;
 import net.manbucy.ipp.boot.core.security.SystemUserId;

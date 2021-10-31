@@ -1,16 +1,16 @@
 package net.manbucy.ipp.cover.auth.service.user;
 
-import net.manbucy.ipp.cover.auth.pojo.entity.user.UserProfile;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.UserProfileEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 用户信息表 服务类
+ *  服务类
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
+ * @since 2021-09-25
  */
-public interface UserProfileService extends IService<UserProfile> {
+public interface UserProfileService extends IService<UserProfileEntity> {
 
 }

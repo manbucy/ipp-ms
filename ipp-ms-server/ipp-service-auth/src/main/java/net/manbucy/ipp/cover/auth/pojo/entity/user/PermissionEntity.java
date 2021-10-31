@@ -14,11 +14,10 @@ import lombok.ToString;
 
 /**
  * <p>
- * 系统角色许可表
+ * 系统许可表
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
  */
 @Data
 @Builder
@@ -26,19 +25,31 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("ipp_role_permission")
-@Schema(name= "RolePermission对象", title= "系统角色许可表")
-public class RolePermission extends BaseEntity {
+@TableName("s_permission")
+@Schema(name= "Permission对象", title= "系统许可表")
+public class PermissionEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "角色id")
-    @TableField("role_id")
-    private Long roleId;
+    @Schema(name = "名称")
+    @TableField("name")
+    private String name;
 
-    @Schema(name = "许可id")
-    @TableField("permission_id")
-    private Long permissionId;
+    @Schema(name = "路径")
+    @TableField("url")
+    private String url;
+
+    @Schema(name = "许可代码")
+    @TableField("code")
+    private String code;
+
+    @Schema(name = "描述")
+    @TableField("memo")
+    private String memo;
+
+    @Schema(name = "是否可用")
+    @TableField("is_enabled")
+    private Integer isEnabled;
 
 
 }

@@ -28,9 +28,9 @@ public enum AuthErrorCode {
      */
     USERNAME_EXIST_ERROR("A0111", "用户名已存在"),
 
-    PHONE_CHECK_ERROR("A0120", "手机号码校验失败"),
+    MOBILE_CHECK_ERROR("A0120", "手机号码校验失败"),
 
-    PHONE_EXIST_ERROR("A0121", "手机号码已存在"),
+    MOBILE_EXIST_ERROR("A0121", "手机号码已存在"),
 
     EMAIL_CHECK_ERROR("A0130", "电子邮箱校验失败"),
 

@@ -40,6 +40,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setServiceName("%sService");
+        gc.setEntityName("%sEntity");
         gc.setFileOverride(fileOverride);
 
         String projectPath = System.getProperty("user.dir");

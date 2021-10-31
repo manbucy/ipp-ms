@@ -1,6 +1,6 @@
 package net.manbucy.ipp.cover.auth.mapper.user;
 
-import net.manbucy.ipp.cover.auth.pojo.entity.user.UserRole;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.UserRoleEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
+ * @since 2021-09-25
  */
-public interface UserRoleMapper extends BaseMapper<UserRole> {
+public interface UserRoleMapper extends BaseMapper<UserRoleEntity> {
 
 }

@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.manbucy.ipp.cover.auth.mapper.user.UserMapper">
-    <resultMap id="userDetail" type="net.manbucy.ipp.cover.auth.pojo.dto.UserDTO">
-        <id property="userId" column="uid"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
-        <result property="phone" column="phone"/>
-        <result property="email" column="email"/>
-        <result property="locked" column="locked"/>
-        <collection property="roles" ofType="net.manbucy.ipp.cover.auth.pojo.dto.RoleDTO">
-            <id property="roleId" column="rid"/>
-            <result property="name" column="r_name"/>
-            <result property="code" column="r_code"/>
-            <result property="memo" column="r_memo"/>
-            <collection property="permissions" ofType="net.manbucy.ipp.cover.auth.pojo.dto.PermissionDTO">
-                <id property="permissionId" column="pid"/>
-                <result property="name" column="p_name"/>
-                <result property="code" column="p_code"/>
-                <result property="memo" column="p_memo"/>
-            </collection>
-        </collection>
-    </resultMap>
 
-    <select id="findUserDetailByUsername" resultMap="userDetail">
-        select u.id uid, u.username as username, u.password as password, u.phone as phone, u.email as email, u.is_locked locked,
-               r.id rid, r.name r_name, r.code r_code, r.memo r_memo,
-               p.id pid, p.name p_name, p.code p_code, p.memo p_memo
-        from s_user u left join s_user_role ur on u.id = ur.user_id and ur.is_deleted = 0
-                      left join s_role r on ur.role_id = r.id and r.is_deleted = 0
-                      left join s_role_permission rp on r.id = rp.role_id and rp.is_deleted = 0
-                      left join s_permission p on rp.permission_id = p.id and p.is_deleted = 0
-        where u.username = #{username}
-          and u.is_deleted = 0;
-    </select>
 </mapper>

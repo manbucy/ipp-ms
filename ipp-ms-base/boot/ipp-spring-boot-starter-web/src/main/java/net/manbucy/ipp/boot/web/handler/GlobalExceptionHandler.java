@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import net.manbucy.ipp.boot.core.api.R;
 import net.manbucy.ipp.boot.core.constants.BaseStatus;
 import net.manbucy.ipp.boot.core.exception.BizException;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,5 +24,11 @@ public class GlobalExceptionHandler {
             code = BaseStatus.FAIL;
         }
         return R.failed(code, e.getMessage(), e.getData());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({HttpMessageConversionException.class})
+    public R<Void> handleHttpMessageConversionException(HttpMessageConversionException e) {
+        return R.failed(BaseStatus.FAIL, "参数转换错误");
     }
 }

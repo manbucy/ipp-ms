@@ -1,6 +1,6 @@
 package net.manbucy.ipp.cover.auth.service.user.impl;
 
-import net.manbucy.ipp.cover.auth.pojo.entity.user.Role;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.RoleEntity;
 import net.manbucy.ipp.cover.auth.mapper.user.RoleMapper;
 import net.manbucy.ipp.cover.auth.service.user.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
+ * @since 2021-09-25
  */
 @Service
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> implements RoleService {
 
 }

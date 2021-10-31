@@ -1,16 +1,16 @@
 package net.manbucy.ipp.cover.auth.mapper.user;
 
-import net.manbucy.ipp.cover.auth.pojo.entity.user.UserProfile;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.UserProfileEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 用户信息表 Mapper 接口
+ *  Mapper 接口
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
+ * @since 2021-09-25
  */
-public interface UserProfileMapper extends BaseMapper<UserProfile> {
+public interface UserProfileMapper extends BaseMapper<UserProfileEntity> {
 
 }

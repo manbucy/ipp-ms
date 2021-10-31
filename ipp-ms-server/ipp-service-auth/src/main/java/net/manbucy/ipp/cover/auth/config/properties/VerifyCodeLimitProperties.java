@@ -6,12 +6,13 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
+ * 验证码校验 配置类
  * @author ManBu
  */
 @Data
 @Component
-@ConfigurationProperties("verify-code.limit")
 @RefreshScope
+@ConfigurationProperties("verify-code.limit")
 public class VerifyCodeLimitProperties {
     /**
      * 重复发送限制时间

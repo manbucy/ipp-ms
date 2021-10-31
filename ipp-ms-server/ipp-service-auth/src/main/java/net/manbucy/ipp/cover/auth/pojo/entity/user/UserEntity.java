@@ -14,11 +14,10 @@ import lombok.ToString;
 
 /**
  * <p>
- * 系统用户角色表
+ * 系统用户表
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
  */
 @Data
 @Builder
@@ -26,19 +25,31 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@TableName("ipp_user_role")
-@Schema(name= "UserRole对象", title= "系统用户角色表")
-public class UserRole extends BaseEntity {
+@TableName("s_user")
+@Schema(name= "User对象", title= "系统用户表")
+public class UserEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "用户id")
-    @TableField("user_id")
-    private Long userId;
+    @Schema(name = "用户名")
+    @TableField("username")
+    private String username;
 
-    @Schema(name = "角色id")
-    @TableField("role_id")
-    private Long roleId;
+    @Schema(name = "密码")
+    @TableField("password")
+    private String password;
+
+    @Schema(name = "手机号码")
+    @TableField("mobile")
+    private String mobile;
+
+    @Schema(name = "邮箱地址")
+    @TableField("email")
+    private String email;
+
+    @Schema(name = "是否禁用")
+    @TableField("is_locked")
+    private Integer isLocked;
 
 
 }

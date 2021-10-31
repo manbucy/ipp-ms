@@ -28,8 +28,8 @@ import java.util.List;
  * @author ManBu
  */
 @Configuration
-@EnableAuthorizationServer
 @RequiredArgsConstructor
+@EnableAuthorizationServer
 public class AuthAuthorizeServerConfigurer extends AuthorizationServerConfigurerAdapter {
     final RedisConnectionFactory redisConnectionFactory;
 

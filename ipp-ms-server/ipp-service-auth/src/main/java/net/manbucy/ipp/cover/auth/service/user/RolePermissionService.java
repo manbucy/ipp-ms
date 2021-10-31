@@ -1,6 +1,6 @@
 package net.manbucy.ipp.cover.auth.service.user;
 
-import net.manbucy.ipp.cover.auth.pojo.entity.user.RolePermission;
+import net.manbucy.ipp.cover.auth.pojo.entity.user.RolePermissionEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author ManBu
- * @since 2021-08-15
+ * @since 2021-09-25
  */
-public interface RolePermissionService extends IService<RolePermission> {
+public interface RolePermissionService extends IService<RolePermissionEntity> {
 
 }
